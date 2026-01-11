@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-main-bg: var(--bg);
+  --color-main-text: var(--text);
+  --color-border: var(--border);
+  --color-secondary: var(--secondary);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --primary: #3b82f6;
+    --bg: #ffffff;
+    --text: #0f172a;
+    --secondary: #64748b;
+    --border: #e2e8f0;
+  }
+
+  .dark {
+    --primary: #60a5fa;
+    --bg: #020617;
+    --text: #f8fafc;
+    --secondary: #94a3b8;
+    --border: #1e293b;
+  }
+
+  body {
+    @apply bg-main-bg text-main-text;
+    margin: 0;
+    transition: none; /* Let View Transitions handle the movement */
+  }
+}
+
+/* --- VIEW TRANSITION OVERRIDES --- */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  display: block;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  /* Hardware acceleration */
+  will-change: clip-path;
+  /* Prevents pixelated edges on the arc */
+  outline: 1px solid transparent;
+}
+
+/* IMPORTANT: Ensure no other transitions interfere */
+* {
+  transition-duration: 0s !important;
+}
+
+/* Except for specific UI elements we WANT to transition later */
+.transition-all {
+  transition-duration: 300ms !important;
+}

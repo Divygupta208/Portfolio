@@ -1,0 +1,64 @@
+This documentation is designed to help a developer understand the mechanics of the Circular Arc Theme Transition implemented in your project. It covers the "how," the "why," and the underlying browser technologies.
+
+Overview
+The goal was to create a "buttery smooth" theme transition that sweeps from left to right in a subtle arc. Instead of a simple fade, we used the View Transition API—a modern browser feature that allows us to animate the change between two different DOM states (Light Mode and Dark Mode).
+
+1. Core Concept: View Transition API
+Traditionally, animating a theme change was difficult because the entire page would "snap" to new colors instantly. The View Transition API solves this by following a specific lifecycle:
+
+Old State Snapshot: When we trigger the toggle, the browser takes a high-quality "screenshot" of the page in its current state (e.g., Light Mode).
+
+The DOM Update: We then tell the browser to update the page. In our project, this is the Redux dispatch that changes the theme state.
+
+New State Snapshot: After the update, the browser takes a second "screenshot" of the page (e.g., Dark Mode).
+
+Pseudo-Element Layering: The browser places these two screenshots in a special tree of pseudo-elements:
+
+::view-transition-old(root): The "Old" snapshot.
+
+::view-transition-new(root): The "New" snapshot.
+
+2. Implementation Strategy
+A. React & Redux Synchronization
+In a React/Redux environment, DOM updates are asynchronous. To make the View Transition API work, we must force React to update the DOM immediately within the transition callback.
+
+We use flushSync from react-dom. This ensures that by the time the startViewTransition callback finishes, the new theme is physically applied to the page so the browser can capture the "New" snapshot correctly.
+
+JavaScript
+
+// The logic inside our ThemeToggle component
+const transition = document.startViewTransition(() => {
+  flushSync(() => {
+    dispatch(toggleTheme()); // Redux update
+  });
+});
+B. The Geometric "Wave" (clip-path)
+To create the sweeping arc effect, we don't use a standard CSS animation. Instead, we use the Web Animations API to animate a clip-path on the ::view-transition-new layer.
+
+Anchor Point: We set the center of the circle far off-screen to the left (e.g., -50% width).
+
+The Sweep: We animate the radius of this circle from 0px to a massive size (e.g., 250% of screen width).
+
+The Arc: Because the circle is so large and its center is far away, the part of the circle that crosses your screen looks like a shallow vertical arc rather than a round bubble.
+
+3. CSS Fine-Tuning
+To ensure the transition is "buttery smooth," we made specific CSS adjustments:
+
+Disabling Default Fade: By default, the API cross-fades the snapshots. We set animation: none on the pseudo-elements to remove this fade and let our clip-path do all the work.
+
+Standard Easing: We used cubic-bezier(0.65, 0, 0.35, 1). This is a professional-grade easing curve that feels natural to the eye—starting slow, moving quickly in the middle, and landing softly.
+
+Hardware Acceleration: Properties like clip-path are optimized by the browser's GPU. By using will-change: clip-path, we hint to the browser to prepare for high-performance animation.
+
+4. Developer Summary: How to Replicate
+If you want to implement this in a new component, follow these 5 steps:
+
+Check Support: Always check if document.startViewTransition exists (fallback to instant toggle if it doesn't).
+
+Define Geometry: Determine where you want the "sweep" to start (Left-to-Right, Center, etc.).
+
+Wrap Update: Wrap your state change in document.startViewTransition(() => flushSync(() => { ... })).
+
+Target Pseudo-Element: Use transition.ready.then() to access the document.documentElement.animate method.
+
+Animate the Clip: Set the pseudoElement property to '::view-transition-new(root)' and animate the clipPath.
