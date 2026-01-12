@@ -1,10 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "../../utils/cn";
 
 interface RollingButtonProps {
-  mainText: string;
-  subText: string;
+  mainText: string | React.ReactNode;
+  subText: string | React.ReactNode;
   mainIcon?: React.ReactNode;
   subIcon?: React.ReactNode;
   direction?: "up" | "down";
@@ -13,7 +13,8 @@ interface RollingButtonProps {
   mainTextColor?: string;
   subTextColor?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
+  showInitialAnimation?: boolean;
 }
 
 const RollingButton: React.FC<RollingButtonProps> = ({
@@ -28,51 +29,121 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   subTextColor = "text-white",
   className,
   onClick,
+  showInitialAnimation = false,
 }) => {
   const isUp = direction === "up";
 
-  // --- 1. Transition Definitions ---
-
-  // Bouncy spring transition for TEXT and ICONS only
-  const textTransition = {
+  // Bouncy spring transition for TEXT and ICONS
+  const springTransition = {
     type: "spring" as const,
     stiffness: 150,
     damping: 15,
     mass: 0.8,
   };
 
-  // Smooth tween transition for BACKGROUND (removes the "breaking" corners)
+  // Smooth tween transition for BACKGROUND
   const bgTransition = {
     type: "tween",
     ease: "easeInOut",
-    duration: 0.2,
+    duration: 0.3,
   } as any;
 
-  // --- 2. Animation Variants ---
+  // --- Animation Variants ---
 
+  // Background rolls in from the direction
   const bgVariants = {
     initial: { y: isUp ? "100%" : "-100%" },
     hover: { y: 0 },
   };
 
+  // Main Text exits toward the direction
   const mainTextVariants = {
-    initial: { y: 0 },
-    hover: { y: isUp ? "-100%" : "100%" },
+    initial: { y: 0, opacity: 1 },
+    hover: { y: isUp ? "-100%" : "100%", opacity: 0 },
   };
 
+  // Sub Text enters from the opposite side
   const subTextVariants = {
-    initial: { y: isUp ? "100%" : "-100%" },
-    hover: { y: 0 },
+    initial: { y: isUp ? "100%" : "-100%", opacity: 0 },
+    hover: { y: 0, opacity: 1 },
   };
 
+  // ICONS roll OPPOSITE to text
+  // Main Icon exits OPPOSITE to text direction
   const mainIconVariants = {
     initial: { y: 0, opacity: 1 },
-    hover: { y: isUp ? "100%" : "-100%", opacity: 0 },
+    hover: { y: isUp ? "100%" : "-100%", opacity: 0 }, // Moves Down if Text moves Up
   };
 
+  // Sub Icon enters from OPPOSITE side of text entry
+  // If Text comes from Bottom (isUp=true), Icon comes from Top
   const subIconVariants = {
-    initial: { y: isUp ? "-100%" : "100%", opacity: 0 },
+    initial: { y: isUp ? "-100%" : "100%", opacity: 0 }, // Starts Top if Text Starts Bottom
     hover: { y: 0, opacity: 1 },
+  };
+
+  // --- Initial Animation Variants (for showInitialAnimation) ---
+  const initialTextVariants: Variants = {
+    hidden: { x: -30, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeInOut", delay: 0.5 },
+    },
+  };
+
+  const initialIconVariants: Variants = {
+    hidden: { x: -10, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeInOut", delay: 0.3 },
+    },
+  };
+
+  // Wrapper for main text and icon with initial animation
+  const MainTextContent = () => {
+    if (showInitialAnimation && typeof mainText === "string") {
+      // Animate words individually
+      const words = mainText.split(" ");
+      return (
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-x-[0.25em]"
+          transition={{ staggerChildren: 0.04 }}
+        >
+          {words.map((word, i) => (
+            <span key={i} className="inline-block overflow-hidden">
+              <motion.span
+                variants={initialTextVariants}
+                className="inline-block"
+              >
+                {word}
+              </motion.span>
+            </span>
+          ))}
+        </motion.div>
+      );
+    }
+    return <>{mainText}</>;
+  };
+
+  const MainIconContent = () => {
+    if (showInitialAnimation && mainIcon) {
+      return (
+        <motion.span
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={initialIconVariants}
+        >
+          {mainIcon}
+        </motion.span>
+      );
+    }
+    return <>{mainIcon}</>;
   };
 
   return (
@@ -81,64 +152,69 @@ const RollingButton: React.FC<RollingButtonProps> = ({
       whileHover="hover"
       onClick={onClick}
       className={cn(
-        // Parent button defines the overall shape and clip area
-        "group relative overflow-hidden px-8 py-3 rounded-full font-bold flex items-center justify-center gap-3 border border-transparent",
+        "group relative box-border overflow-hidden px-8 py-3 rounded-full font-bold flex items-center justify-center gap-3 border border-transparent",
         mainBgColor,
         mainTextColor,
         className
       )}
     >
-      {/* 1. Sub-Background (The "Second Button" effect) */}
+      {/* 1. Rolling Background */}
       <motion.div
         variants={bgVariants}
         transition={bgTransition}
         className={cn(
-          "absolute inset-0 w-full h-full z-0 rounded-full", // Rounded-full ensures it looks like a clean button roll
+          "absolute inset-0 w-full h-full z-0 rounded-full",
           subBgColor
         )}
       />
 
-      {/* 2. Icon Container */}
-      {(mainIcon || subIcon) && (
-        <div className="relative z-10 h-5 w-5 flex items-center justify-center overflow-hidden">
-          {mainIcon && (
-            <motion.div
-              variants={mainIconVariants}
-              transition={textTransition} // Stays bouncy
-              className="absolute"
-            >
-              {mainIcon}
-            </motion.div>
-          )}
-          {subIcon && (
-            <motion.div
-              variants={subIconVariants}
-              transition={textTransition} // Stays bouncy
-              className="absolute"
-            >
-              {subIcon}
-            </motion.div>
-          )}
+      {/* 2. Unified Content Container */}
+      <div className="relative z-10 flex items-center justify-center gap-1 overflow-hidden">
+
+        {/* ICON COLUMN - Only rendered if at least one icon exists */}
+        {(mainIcon || subIcon) && (
+          <div className="relative flex items-center justify-center w-5 h-5">
+            {mainIcon && (
+              <motion.span
+                variants={mainIconVariants}
+                transition={springTransition}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <MainIconContent />
+              </motion.span>
+            )}
+            {subIcon && (
+              <motion.span
+                variants={subIconVariants}
+                transition={springTransition}
+                className={cn("absolute inset-0 flex items-center justify-center", subTextColor)}
+              >
+                {subIcon}
+              </motion.span>
+            )}
+          </div>
+        )}
+
+        {/* TEXT COLUMN - Uses Grid to ensure width accommodates widest text */}
+        <div className="relative grid items-center justify-items-center">
+          {/* Main Text */}
+          <motion.div
+            variants={mainTextVariants}
+            transition={springTransition}
+            className="col-start-1 row-start-1 whitespace-nowrap"
+          >
+            <MainTextContent />
+          </motion.div>
+
+          {/* Sub Text */}
+          <motion.div
+            variants={subTextVariants}
+            transition={springTransition}
+            className={cn("col-start-1 row-start-1 whitespace-nowrap", subTextColor)}
+          >
+            {subText}
+          </motion.div>
         </div>
-      )}
-
-      {/* 3. Text Container */}
-      <div className="relative z-10 overflow-hidden h-6 flex flex-col justify-center">
-        <motion.span
-          variants={mainTextVariants}
-          transition={textTransition} // Stays bouncy
-          className="block whitespace-nowrap"
-        >
-          {mainText}
-        </motion.span>
-
-        <motion.span
-          variants={subTextVariants}
-          transition={textTransition} // Stays bouncy
-          className={cn("absolute block whitespace-nowrap", subTextColor)}
-        >
-          {subText}
-        </motion.span>
       </div>
     </motion.button>
   );
