@@ -23,7 +23,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: variant === "allUp" ? 0 : 0.04,
+        staggerChildren: variant === "allUp" ? 0 : 0.06,
         delayChildren: delay,
       },
     },
