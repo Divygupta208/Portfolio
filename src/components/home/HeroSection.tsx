@@ -64,20 +64,20 @@ const Hero = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grow max-w-6xl bg-[#F3F4F6] rounded-[40px] flex flex-col items-center justify-center text-center px-6"
+        className="grow max-w-6xl bg-[white] rounded-[40px] flex flex-col items-center justify-center text-center px-6"
       >
-        <div className="flex gap-1">
+        <div className="flex gap-2">
           <TextAnimation
             text="Hello, I'm"
             variant="wordUp"
             delay={0.5}
-            className="mb-4 text-lg md:text-2xl font-medium text-black"
+            className="mb-4 text-lg md:text-3xl lg:text-3xl text-black"
           />
           <TextAnimation
             text="Divy"
             variant="wordUp"
-            delay={0.7}
-            className="mb-4 text-lg md:text-2xl font-medium text-black"
+            delay={0.6}
+            className="mb-4 text-lg md:text-3xl lg:text-3xl text-black"
           />
         </div>
         <TextAnimation
@@ -101,7 +101,7 @@ const Hero = () => {
           className="mb-10 text-xl md:text-xl font-light text-black"
         />
 
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-5">
           <RollingButton
             mainText="CONTACT ME"
             subText="LET'S TALK"
@@ -111,17 +111,25 @@ const Hero = () => {
             subTextColor="text-black"
             direction="down"
           />
+          <RollingButton
+            mainText="RESUME"
+            subText="DOWNLOAD"
+            mainBgColor="bg-black"
+            subBgColor="bg-white"
+            mainTextColor="text-white"
+            subTextColor="text-black"
+            direction="down"
+          />
         </motion.div>
+
       </motion.div>
 
       {/* Bottom Social Links Row */}
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-items-center mx-auto max-w-6xl">
+      <div className="max-w-6xl grid grid-cols-2  lg:grid-cols-4 items-center mx-auto">
         {socialLinks.map((link, index) => (
           <motion.div
             key={link.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 + index * 0.1 }}
+
           >
             <RollingButton
               mainText={link.name}
@@ -129,10 +137,11 @@ const Hero = () => {
               mainIcon={link.icon}
               subIcon={link.subIcon}
               direction="up"
-              mainBgColor="bg-[#F3F4F6]"
-              subBgColor="bg-[#F3F4F6]"
+              mainBgColor="bg-[white]"
+              subBgColor="bg-[white]"
               mainTextColor="text-black"
               subTextColor="text-black"
+              showInitialAnimation={true}
               className="rounded-xl px-20 py-6"
             />
           </motion.div>
