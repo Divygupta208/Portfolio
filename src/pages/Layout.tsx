@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAppSelector } from "../store/hooks";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import CustomCursor from "../components/ui/CustomCursor";
 
 const Layout: React.FC = () => {
   const mode = useAppSelector((state) => state.theme.mode);
@@ -15,6 +16,8 @@ const Layout: React.FC = () => {
   }, [mode]);
 
   return (
+    <>
+    <CustomCursor/>
     <div className="min-h-screen flex flex-col bg-main-bg text-main-text transition-colors duration-500">
       {/* 1. Header (Fixed/Floating) */}
       <Header />
@@ -27,6 +30,7 @@ const Layout: React.FC = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
