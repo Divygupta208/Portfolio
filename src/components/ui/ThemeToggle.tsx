@@ -10,9 +10,9 @@ const ThemeToggle: React.FC = () => {
 
   const handleToggle = () => {
     // Pass the state change logic into the wave hook
-    startWave(() => {
-      dispatch(toggleTheme());
-    });
+    // startWave(() => {
+    //   dispatch(toggleTheme());
+    // });
   };
 
   return (

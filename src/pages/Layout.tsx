@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppSelector } from "../store/hooks";
 import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 const Layout: React.FC = () => {
   const mode = useAppSelector((state) => state.theme.mode);
@@ -23,6 +24,8 @@ const Layout: React.FC = () => {
         {/* Outlet renders the child routes (Home, Works, About, etc.) */}
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 };

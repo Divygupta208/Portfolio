@@ -1,7 +1,8 @@
 import React from "react";
+import Hero from "../components/home/HeroSection";
 
 const About = () => {
-  return <div></div>;
+  return <div className="">hello</div>;
 };
 
 export default About;
