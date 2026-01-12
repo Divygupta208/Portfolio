@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import { Pointer } from "lucide-react";
 
 const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -79,7 +80,7 @@ const CustomCursor = () => {
 
               {/* Text */}
               <span className="absolute text-[13px] font-bold text-white uppercase tracking-widest">
-                View
+                <Pointer size={40}/>
               </span>
             </motion.div>
           )}
