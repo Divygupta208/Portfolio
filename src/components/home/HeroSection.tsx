@@ -58,13 +58,13 @@ const Hero = () => {
   ];
 
   return (
-    <section className="min-h-screen w-full bg-[#E5E7EB] p-4 md:p-6 flex flex-col gap-4">
+    <section className="min-h-screen w-full bg-[#E5E7EB] flex flex-col gap-4">
       {/* Main Hero Card */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grow max-w-6xl bg-[white] rounded-[40px] flex flex-col items-center justify-center text-center px-6"
+        className="grow max-w-6xl bg-[white] rounded-3xl flex flex-col items-center justify-center text-center"
       >
         <div className="flex gap-2">
           <TextAnimation

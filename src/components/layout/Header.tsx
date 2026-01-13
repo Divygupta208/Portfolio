@@ -24,10 +24,10 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-10 max-w-6xl mx-auto"
       style={{ viewTransitionName: "site-header" } as React.CSSProperties}
     >
-      <nav className="relative w-full max-w-5xl bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 h-20 rounded-full flex items-center justify-between px-4 shadow-2xl transition-all duration-500">
+      <nav className="relative w-full bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 h-20 rounded-full flex items-center justify-between px-4 transition-all duration-500">
         {/* Left: Menu Toggle */}
         <RollingButton
           mainText="MENU"
