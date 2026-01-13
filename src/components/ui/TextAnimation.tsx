@@ -7,6 +7,10 @@ interface TextAnimationProps {
   variant?: "wordUp" | "wordRight" | "allUp";
   className?: string;
   delay?: number;
+  trigger?: boolean;
+  staggerDuration?: number;
+  duration?: number;
+  once?: boolean;
 }
 
 const TextAnimation: React.FC<TextAnimationProps> = ({
@@ -14,6 +18,10 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
   variant = "wordUp",
   className,
   delay = 0,
+  trigger,
+  staggerDuration,
+  duration,
+  once = true,
 }) => {
   const words = text.split(" ");
 
@@ -23,7 +31,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: variant === "allUp" ? 0 : 0.06,
+        staggerChildren: staggerDuration !== undefined ? staggerDuration : (variant === "allUp" ? 0 : 0.06),
         delayChildren: delay,
       },
     },
@@ -37,7 +45,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
       visible: {
         y: 0,
         opacity: 1,
-        transition: { duration: 0.4, ease: "easeInOut" },
+        transition: { duration: duration ?? 0.4, ease: "easeInOut" },
       },
     },
     wordRight: {
@@ -45,7 +53,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
       visible: {
         x: 0,
         opacity: 1,
-        transition: { duration: 0.6, ease: "easeOut" },
+        transition: { duration: duration ?? 0.6, ease: "easeOut" },
       },
     },
     allUp: {
@@ -53,7 +61,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
       visible: {
         y: 0,
         opacity: 1,
-        transition: { duration: 0.9, ease: "easeInOut" },
+        transition: { duration: duration ?? 0.9, ease: "easeInOut" },
       },
     },
   };
@@ -62,8 +70,11 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
     <motion.div
       variants={containerVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
+      // If trigger is provided, use it to control state.
+      // If trigger is undefined, fall back to "whileInView" behavior.
+      animate={trigger !== undefined ? (trigger ? "visible" : "hidden") : undefined}
+      whileInView={trigger === undefined ? "visible" : undefined}
+      viewport={{ once }}
       className={cn("flex flex-wrap gap-x-[0.25em]", className)}
     >
       {variant === "allUp" ? (

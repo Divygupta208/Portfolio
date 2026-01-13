@@ -9,11 +9,11 @@ import CustomCursor from "../components/ui/CustomCursor";
 const Layout: React.FC = () => {
   const mode = useAppSelector((state) => state.theme.mode);
 
- 
+
   return (
     <>
       <CustomCursor />
-      
+
       {/* The "Reveal" Wrapper 
         We use relative positioning and a high z-index here to cover the footer.
       */}
@@ -22,7 +22,7 @@ const Layout: React.FC = () => {
         <Header />
 
         {/* Main Content Area */}
-        <main className="grow pt-28 pb-20 px-4 max-w-7xl mx-auto min-h-screen">
+        <main className="grow pt-32 pb-20 max-w-7xl mx-auto min-h-screen">
           <Outlet />
         </main>
       </div>
