@@ -4,7 +4,8 @@ import { Pointer } from "lucide-react";
 
 const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
-  
+  const [cursorText, setCursorText] = useState<string | null>(null);
+
   // 1. Mouse Position (Raw)
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -24,10 +25,17 @@ const CustomCursor = () => {
 
     const handleHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest("button, a, [data-cursor='hover']")) {
+      // Check for hover trigger
+      const hoverable = target.closest("button, a, [data-cursor='hover']");
+
+      if (hoverable) {
         setIsHovered(true);
+        // Check for custom text
+        const text = hoverable.getAttribute("data-cursor-text");
+        setCursorText(text);
       } else {
         setIsHovered(false);
+        setCursorText(null);
       }
     };
 
@@ -40,20 +48,20 @@ const CustomCursor = () => {
   }, [mouseX, mouseY]);
 
   return (
-    <div className="fixed top-0 left-0 pointer-events-none z-[100000] mix-blend-difference">
+    <div className={`fixed top-0 left-0 pointer-events-none z-[100000] ${cursorText ? "" : "mix-blend-difference"}`}>
       {/* MAIN WRAPPER: This stays centered on the mouse.
           We use -50% translation so the anchor point is the dead center of the cursor.
       */}
       <motion.div
-        style={{ 
-          x: cursorX, 
+        style={{
+          x: cursorX,
           y: cursorY,
           translateX: "-50%",
-          translateY: "-50%" 
+          translateY: "-50%"
         }}
         className="relative flex items-center justify-center w-0 h-0"
       >
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {!isHovered ? (
             // --- DEFAULT DOT ---
             <motion.div
@@ -65,23 +73,22 @@ const CustomCursor = () => {
               className="absolute w-5 h-5 shadow-2xl shadow-slate-600 bg-white rounded-full"
             />
           ) : (
-            // --- HOVER SVG ---
+            // --- HOVER STATE ---
             <motion.div
-              key="hover-state"
+              key={cursorText || "hover-icon"}
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="absolute flex items-center justify-center"
+              className={`absolute flex items-center justify-center ${cursorText ? "w-24 h-24 bg-white/60 text-black rounded-full" : ""}`}
             >
-             
-
-              
-
-              {/* Text */}
-              <span className="absolute text-[13px] font-bold text-white uppercase tracking-widest">
-                <Pointer size={40}/>
-              </span>
+              {cursorText ? (
+                <span className="text-[13px] font-bold uppercase tracking-widest">{cursorText}</span>
+              ) : (
+                <motion.div className="absolute text-[13px] font-bold text-white uppercase tracking-widest">
+                  <Pointer size={40} />
+                </motion.div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

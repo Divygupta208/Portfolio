@@ -6,6 +6,8 @@ import {
     useTransform,
     useSpring,
 } from "framer-motion";
+import RollingButton from "../ui/RollButton";
+import TextAnimation from "../ui/TextAnimation";
 
 const sections = [
     {
@@ -75,60 +77,105 @@ const SelectedWorks = () => {
     );
 
     return (
-        <div
-            ref={containerRef}
-            className="relative bg-white"
-            style={{ minHeight: "300vh" }}
-        >
-            <div className="flex flex-col md:flex-row bg-white px-4 items-start max-w-7xl mx-auto">
+        <>
+            <div
+                ref={containerRef}
+                className="relative"
+                style={{ minHeight: "auto" }} // Let height be natural, overridden by inner responsiveness
+            >
+                {/* Desktop Spacer for scrolling - only applies on large screens via CSS class if needed, or we rely on content */}
 
-                {/* LEFT SIDE: TEXT CONTENT */}
-                <div className="w-full md:w-1/2 relative">
-                    {sections.map((section, index) => (
-                        <ContentSection
-                            key={section.id}
-                            index={index}
-                            section={section}
-                            onInView={() => setActiveIndex(index)}
-                        />
-                    ))}
+                <div className="flex justify-center gap-4 mb-5 pt-10 md:pt-20">
+                    <TextAnimation
+                        variant="wordUp"
+                        duration={0.6}
+                        delay={0.4}
+                        text="Selected"
+                        className="text-4xl md:text-6xl font-medium  text-zinc-950 tracking-tighter"
+                    />
+                    <TextAnimation
+                        variant="wordUp"
+                        duration={0.6}
+                        delay={0.7}
+                        text="Works"
+                        className="text-4xl md:text-6xl font-medium  text-zinc-950 tracking-tighter "
+                    />
+                </div>
+                <div className="flex justify-center px-4 text-center">
+                    <TextAnimation
+                        variant="allUp"
+                        duration={0.6}
+                        delay={0.9}
+                        text="Here are some of my selected works."
+                        className="text-lg md:text-xl font-medium mb-10 text-zinc-950 tracking-tighter"
+                    />
                 </div>
 
-                {/* RIGHT SIDE: STICKY AREA */}
-                <div className="w-full md:w-1/2 h-screen sticky top-0 flex items-center justify-center p-6 overflow-hidden">
+                <div className="flex flex-col md:flex-row bg-white md:bg-white rounded-4xl items-start max-w-7xl mx-auto md:min-h-[300vh]">
 
-                    {/* THE PARALLAX CONTAINER */}
-                    <motion.div
-                        style={{ y: containerY }}
-                        className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden rounded-[40px] bg-zinc-100 border border-zinc-200/50 shadow-2xl will-change-transform"
-                    >
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeIndex}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5, ease: "easeInOut" }}
-                                className="absolute inset-0 w-full h-full"
-                            >
-                                <motion.img
-                                    src={sections[activeIndex].image}
-                                    alt=""
-                                    style={{
-                                        y: imageY,
-                                        scale: 1.3, // ensures no edge gaps
-                                    }}
-                                    className="w-full h-full object-cover will-change-transform"
-                                />
-                            </motion.div>
-                        </AnimatePresence>
+                    {/* LEFT SIDE: TEXT CONTENT */}
+                    <div className="w-full md:w-1/2 relative px-4 md:px-0">
+                        {sections.map((section, index) => (
+                            <ContentSection
+                                key={section.id}
+                                index={index}
+                                section={section}
+                                onInView={() => setActiveIndex(index)}
+                            />
+                        ))}
+                    </div>
 
-                        {/* Glass overlay */}
-                        <div className="absolute inset-0 rounded-[40px] ring-1 ring-inset ring-black/10 pointer-events-none" />
-                    </motion.div>
+                    {/* RIGHT SIDE: STICKY AREA (Desktop Only) */}
+                    <div className="hidden md:flex w-1/2 h-screen sticky top-0 items-center justify-center p-6 overflow-hidden">
+
+                        {/* THE PARALLAX CONTAINER */}
+                        <motion.div
+                            style={{ y: containerY }}
+                            className="relative w-full h-[80vh] overflow-hidden rounded-[40px] bg-zinc-100 border border-zinc-200/50 shadow-2xl will-change-transform"
+                        >
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeIndex}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    className="absolute inset-0 w-full h-full"
+                                >
+                                    <motion.img
+                                        src={sections[activeIndex].image}
+                                        alt=""
+                                        style={{
+                                            y: imageY,
+                                            scale: 1.3, // ensures no edge gaps
+                                        }}
+                                        className="w-full h-full object-cover will-change-transform"
+                                    />
+                                </motion.div>
+                            </AnimatePresence>
+
+                            {/* Glass overlay */}
+                            <div className="absolute inset-0 rounded-[40px] ring-1 ring-inset ring-black/10 pointer-events-none" />
+                        </motion.div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="flex justify-center pb-20 md:pb-0">
+
+                <RollingButton
+                    mainText="View More"
+                    subText="My Projects"
+                    mainIcon=""
+                    subIcon=""
+                    direction="up"
+                    mainBgColor=""
+                    subBgColor=""
+                    className=" font-medium px-14 py-5 md:-mt-10 border border-black"
+                    mainTextColor="text-black"
+                    subTextColor="text-black"
+                />
+            </div>
+        </>
     );
 };
 
@@ -158,20 +205,29 @@ const ContentSection = ({
     return (
         <section
             ref={sectionRef}
-            className="h-screen flex flex-col justify-center px-10 md:px-20"
+            className="h-auto md:h-screen flex flex-col justify-center py-10 md:py-0 md:px-20"
         >
+            {/* MOBILE IMAGE CARD (Hidden on Desktop) */}
+            <div className="block md:hidden mb-6 w-full h-[300px] rounded-[30px] overflow-hidden shadow-lg">
+                <img
+                    src={section.image}
+                    alt={section.title}
+                    className="w-full h-full object-cover"
+                />
+            </div>
+
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-                <span className="text-zinc-400 font-mono text-sm mb-4 block uppercase tracking-widest">
+                <span className="text-zinc-600 md:text-zinc-400 font-mono text-sm mb-4 block uppercase tracking-widest">
                     0{index + 1}
                 </span>
-                <h2 className="text-5xl md:text-7xl font-bold mb-8 text-zinc-950 tracking-tighter">
+                <h2 className="text-4xl md:text-7xl font-bold mb-6 md:mb-8 text-zinc-950 tracking-tighter">
                     {section.title}
                 </h2>
-                <p className="text-xl text-zinc-500 max-w-md">
+                <p className="text-lg md:text-xl text-zinc-600 md:text-zinc-500 max-w-md leading-relaxed">
                     {section.description}
                 </p>
             </motion.div>
