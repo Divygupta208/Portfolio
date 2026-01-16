@@ -81,7 +81,7 @@ const TextAnimation: React.FC<TextAnimationProps> = ({
         <motion.span variants={animationVariants.allUp}>{text}</motion.span>
       ) : (
         words.map((word, i) => (
-          <span key={i} className="inline-block overflow-hidden py-1">
+          <span key={i} className="inline-block py-1">
             <motion.span
               variants={animationVariants[variant]}
               className="inline-block"
