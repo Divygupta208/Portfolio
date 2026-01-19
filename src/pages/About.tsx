@@ -1,12 +1,13 @@
-import React from "react";
-import Hero from "../components/home/HeroSection";
-import AboutSection from "../components/home/AboutMe";
+import AboutHero from "../components/about/AboutHero";
+import MySkills from "../components/about/MySkills";
 
 const About = () => {
-  return <div className="">
-    about
-
-  </div>;
+  return (
+    <>
+      <AboutHero />
+      <MySkills />
+    </>
+  );
 };
 
 export default About;

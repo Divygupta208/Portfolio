@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import RollingButton from "../ui/RollButton";
+import Hamburger from "../ui/Hamburger";
 import { useWaveTransition } from "../../hooks/useViewTransition";
 // Ensure this path is correct
 
@@ -29,19 +29,18 @@ const Header: React.FC = () => {
     >
       <nav className="relative w-full bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 h-20 rounded-full flex items-center justify-between px-4 transition-all duration-500">
         {/* Left: Menu Toggle */}
-        <RollingButton
-          mainText="MENU"
-          subText={isOpen ? "CLOSE" : "OPEN"}
-          mainIcon={isOpen ? <X size={18} /> : <Menu size={18} />}
-          subIcon={isOpen ? <X size={18} /> : <Menu size={18} />}
-          direction="down"
-          mainBgColor="bg-transparent"
-          subBgColor="bg-slate-800"
-          mainTextColor="text-slate-900 dark:text-white"
-          subTextColor="text-white"
+        <div
+          className="flex items-center gap-2 hover:opacity-70 transition-opacity"
           onClick={() => setIsOpen(!isOpen)}
-          className="border-none hover:bg-slate-100 dark:hover:bg-slate-800"
-        />
+        >
+          <Hamburger
+            isOpen={isOpen}
+            className="text-slate-900 dark:text-white scale-75"
+          />
+          <span className="font-medium text-sm tracking-widest text-slate-900 dark:text-white uppercase hidden sm:block">
+            {isOpen ? "Close" : "Menu"}
+          </span>
+        </div>
 
         {/* Center: Brand Name */}
         <div
