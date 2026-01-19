@@ -27,10 +27,10 @@ const skillsData = [
     { name: "Three", icon: SiTypescript, color: "#3178C6", size: 80, x: 25, z: 0 },
     { name: "Logic", icon: SiJavascript, color: "#F7DF1E", size: 85, x: -30, z: 20 },
     { name: "Server", icon: FaNodeJs, color: "#339933", size: 95, x: 30, z: -30 },
-    { name: "Web", icon: SiNextdotjs, color: "#000000", size: 90, x: -10, z: 60 },
+    { name: "Web", icon: SiNextdotjs, color: "#ffffff", size: 90, x: -10, z: 60 },
     { name: "Data", icon: SiPostgresql, color: "#336791", size: 80, x: 35, z: -20 },
     { name: "Cloud", icon: FaAws, color: "#FF9900", size: 100, x: -35, z: 10 },
-    { name: "API", icon: SiExpress, color: "#000000", size: 75, x: 15, z: 40 },
+    { name: "API", icon: SiExpress, color: "#ffffff", size: 75, x: 15, z: 40 },
     { name: "Struct", icon: FaHtml5, color: "#E34F26", size: 85, x: -25, z: -10 },
     { name: "Style", icon: FaCss3, color: "#1572B6", size: 85, x: 35, z: 30 },
     { name: "Version", icon: FaGitAlt, color: "#F05032", size: 70, x: 5, z: 0 },
@@ -169,7 +169,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill, progress, index, total }) 
                 >
                     <skill.icon
                         className="drop-shadow-[0_0_4px_rgba(0,0,0,0.3)]"
-                        style={{ color: "white", fontSize: cardSize * 0.5 }}
+                        style={{ color: skill.color, fontSize: cardSize * 0.5 }}
                     />
                 </motion.div>
                 <motion.p
