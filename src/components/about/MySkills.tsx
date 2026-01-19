@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue, useSpring } from "framer-motion";
 import {
     FaReact,
     FaNodeJs,
@@ -18,7 +18,7 @@ import {
     SiFramer,
     SiGreensock,
 } from "react-icons/si";
-import { useParallax } from "../ui/useParallax";
+
 
 // Skill Data
 // We remove 'y' from here and calculate it dynamically to ensure even spread
@@ -116,7 +116,22 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill, progress, index, total }) 
     // For snake pattern, alternate x position left/right based on index
     const cardX = (index % 2 === 0 ? -20 : 20); // Alternating -20vw and 20vw for zig-zag appearance
 
-    const { ref, y: yx } = useParallax({ distance: 90, stiffness: 100, damping: 30 });
+
+    // Parallax Fix:
+    // The default useParallax hook uses useScroll which tracks layout position.
+    // Since these cards are inside a sticky container and moved via transforms (y), 
+    // their layout position doesn't change relative to the viewport.
+    // We must drive the parallax effect using the card's visual 'y' position.
+
+    // Map the card's Y position (from off-screen bottom to off-screen top) to a parallax offset.
+    // We use a range of [-800, 800] to cover the viewport height with some buffer.
+    const parallaxValue = useTransform(y, [800, -800], [70, -70]);
+
+    // Add spring physics for smooth movement, matching the original hook's feel
+    const yx = useSpring(parallaxValue, {
+        stiffness: 100,
+        damping: 30
+    });
 
     const cardSize = skill.size * 2;
 
@@ -130,7 +145,6 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill, progress, index, total }) 
             }}
         >
             <motion.div
-                ref={ref}
                 className="relative rounded-2xl flex items-center justify-center border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.1)] overflow-hidden"
                 style={{
                     y: yx,
