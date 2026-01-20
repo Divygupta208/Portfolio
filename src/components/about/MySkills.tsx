@@ -7,6 +7,7 @@ import {
     FaHtml5,
     FaCss3,
     FaGitAlt,
+    FaChevronDown,
 } from "react-icons/fa";
 import {
     SiTypescript,
@@ -24,19 +25,19 @@ import {
 // We remove 'y' from here and calculate it dynamically to ensure even spread
 const skillsData = [
     { name: "React", icon: FaReact, color: "#61DAFB", size: 90, x: -20, z: 50 },
-    { name: "Three", icon: SiTypescript, color: "#3178C6", size: 80, x: 25, z: 0 },
-    { name: "Logic", icon: SiJavascript, color: "#F7DF1E", size: 85, x: -30, z: 20 },
+    { name: "Three", icon: SiTypescript, color: "#0095ffff", size: 80, x: 25, z: 0 },
+    { name: "Logic", icon: SiJavascript, color: "#f7cf1eff", size: 85, x: -30, z: 20 },
     { name: "Server", icon: FaNodeJs, color: "#339933", size: 95, x: 30, z: -30 },
     { name: "Web", icon: SiNextdotjs, color: "#ffffff", size: 90, x: -10, z: 60 },
     { name: "Data", icon: SiPostgresql, color: "#336791", size: 80, x: 35, z: -20 },
     { name: "Cloud", icon: FaAws, color: "#FF9900", size: 100, x: -35, z: 10 },
     { name: "API", icon: SiExpress, color: "#ffffff", size: 75, x: 15, z: 40 },
     { name: "Struct", icon: FaHtml5, color: "#E34F26", size: 85, x: -25, z: -10 },
-    { name: "Style", icon: FaCss3, color: "#1572B6", size: 85, x: 35, z: 30 },
-    { name: "Version", icon: FaGitAlt, color: "#F05032", size: 70, x: 5, z: 0 },
+    { name: "Style", icon: FaCss3, color: "#0095ffff", size: 85, x: 35, z: 30 },
+    { name: "Version", icon: FaGitAlt, color: "#ff2600ff", size: 70, x: 5, z: 0 },
     { name: "State", icon: SiRedux, color: "#764ABC", size: 80, x: -30, z: 50 },
     { name: "Motion", icon: SiFramer, color: "#0055FF", size: 95, x: 30, z: -40 },
-    { name: "Anim", icon: SiGreensock, color: "#88CE02", size: 90, x: 0, z: 20 },
+    { name: "Anim", icon: SiGreensock, color: "#a6ff00ff", size: 90, x: 0, z: 20 },
 ];
 
 const MySkills: React.FC = () => {
@@ -49,18 +50,32 @@ const MySkills: React.FC = () => {
 
     return (
         // Height determines how long the scroll section is. 400vh gives enough room for 14 items to spread out.
-        <div ref={containerRef} className="relative h-[400vh] bg-main-bg">
+        <div ref={containerRef} className="relative h-[300vh] bg-main-bg">
+
             {/* Sticky Background Heading */}
             {/* 
          'sticky top-0' works until the parent container scrolls out of view.
          We use overflow-hidden to clip the cards as they pass by.
       */}
             <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
+                {/* Top Sticky Header */}
+                <div className="absolute top-8 left-0 right-0 flex flex-col items-center z-50">
+                    <h3 className="text-sm md:text-base font-bold text-black/40 uppercase tracking-[0.2em] mb-2">
+                        My Skills
+                    </h3>
+                    <motion.div
+                        animate={{ y: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="text-black/30"
+                    >
+                        <FaChevronDown size={20} />
+                    </motion.div>
+                </div>
                 <motion.h2
-                    className="text-[12vw] font-bold text-black/60 uppercase tracking-tighter select-none pointer-events-none"
+                    className="text-[15vw] md:text-[12vw] font-bold text-black uppercase tracking-tighter select-none pointer-events-none"
                     style={{
-                        opacity: useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]),
-                        scale: useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]),
+                        y: useTransform(scrollYProgress, [0, 0.25, 0.75, 1], ["100vh", "0vh", "0vh", "-100vh"]),
+                        opacity: useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]),
                     }}
                 >
                     My Skills
@@ -145,12 +160,12 @@ const SkillCard: React.FC<SkillCardProps> = ({ skill, progress, index, total }) 
             }}
         >
             <motion.div
-                className="relative rounded-2xl flex items-center justify-center border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.1)] overflow-hidden"
+                className="relative rounded-4xl flex items-center justify-center border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.1)] overflow-hidden"
                 style={{
                     y: yx,
                     width: cardSize,
                     height: cardSize,
-                    backgroundColor: "#000000",
+                    backgroundColor: "#000000ff",
                 }}
                 variants={{
                     rest: { scale: 1 },

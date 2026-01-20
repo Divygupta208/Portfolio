@@ -76,7 +76,7 @@ const Layout: React.FC = () => {
       <div className="relative flex flex-col items-center justify-center z-10 bg-main-bg mb-[500px] md:mb-[600px] rounded-b-[40px]">
         <Header />
 
-        <main className="grow pt-32 pb-20 max-w-7xl mx-auto min-h-screen">
+        <main className="w-full grow pt-32 pb-20 max-w-6xl mx-auto min-h-screen">
           <Outlet />
         </main>
       </div>
