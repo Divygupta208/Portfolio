@@ -58,25 +58,27 @@ const Hero = () => {
   ];
 
   return (
-    <section className="min-h-screen w-full bg-[#E5E7EB] flex flex-col gap-4 p-4 md:p-6 lg:p-0">
+    <section className="min-h-screen w-full bg-[#E5E7EB] flex flex-col gap-4 px-4 md:px-6 lg:p-0">
       {/* Main Hero Card */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grow w-full max-w-6xl mx-auto bg-white rounded-3xl flex flex-col items-center justify-center text-center p-8 md:p-12"
+        className="grow w-full max-w-6xl mx-auto bg-white rounded-4xl flex flex-col items-center justify-center text-center p-8 md:p-12"
       >
         <div className="flex gap-2 flex-wrap justify-center">
           <TextAnimation
             text="Hello, I'm"
             variant="wordUp"
             delay={0.5}
+            trigger={true}
             className="mb-2 md:mb-4 text-xl md:text-3xl lg:text-3xl text-black"
           />
           <TextAnimation
             text="Divy"
             variant="wordUp"
             delay={0.6}
+            trigger={true}
             className="mb-2 md:mb-4 text-xl md:text-3xl lg:text-3xl text-black"
           />
         </div>
@@ -85,12 +87,14 @@ const Hero = () => {
             text="I'm bringing ideas to life"
             variant="allUp"
             delay={0.9}
+            trigger={true}
             className="mb-2 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
           />
           <TextAnimation
             text="with lasting impact"
             variant="allUp"
             delay={1}
+            trigger={true}
             className="mb-4 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
           />
         </div>
@@ -100,11 +104,15 @@ const Hero = () => {
             text="I create digital products that focus on the user's needs and fit the product strategy"
             variant="allUp"
             delay={1.2}
+            trigger={true}
             className="mb-8 md:mb-10 text-base md:text-xl font-light text-black leading-relaxed"
           />
         </div>
 
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-5 w-full sm:w-auto px-4 sm:px-0">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-4 md:gap-5 w-full sm:w-auto px-4 sm:px-0"
+        >
           <RollingButton
             mainText="CONTACT ME"
             subText="LET'S TALK"
@@ -126,16 +134,12 @@ const Hero = () => {
             className="w-full sm:w-auto justify-center"
           />
         </motion.div>
-
       </motion.div>
 
       {/* Bottom Social Links Row */}
       <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center mx-auto pb-4 lg:pb-0 px-4 lg:px-0">
         {socialLinks.map((link, index) => (
-          <motion.div
-            key={link.name}
-            className="w-full"
-          >
+          <motion.div key={link.name} className="w-full">
             <RollingButton
               mainText={link.name}
               subText="Visit Link"

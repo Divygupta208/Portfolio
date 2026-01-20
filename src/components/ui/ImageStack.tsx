@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
+import { Hand } from "lucide-react";
 
 // Replace these with your actual images
 const stackImages = [
@@ -52,6 +53,12 @@ const ImageStack = () => {
             data-cursor="hover"
             data-cursor-text="DRAG"
         >
+            {/* Drag Indicator (Mobile Only) */}
+            <div className="absolute top-4 right-4 md:hidden flex items-center gap-2 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full z-20 pointer-events-none animate-pulse">
+                <Hand className="w-4 h-4 text-white" />
+                <span className="text-white text-xs font-medium uppercase tracking-wider">Drag</span>
+            </div>
+
             {/* Background Stack Layers
         - Added 'rotate' for tilt.
         - Added 'translate' for offset positioning.
@@ -92,10 +99,12 @@ const ImageStack = () => {
                     }}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.7}
+                    dragElastic={1} // Smoother feel (was 0.7)
+                    dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }} // Snappy yet smooth return
+                    whileTap={{ cursor: "grabbing", scale: 0.98 }}
                     onDragEnd={handleDragEnd}
                     // The active card is center, straight, and largest
-                    className="absolute w-[95%] h-[95%] rounded-[40px] bg-cover bg-center z-10 grayscale-50  overflow-hidden border-[6px] border-white"
+                    className="absolute w-[95%] h-[95%] rounded-[40px] bg-cover bg-center z-10 grayscale-50  overflow-hidden border-[6px] border-white touch-pan-y" // Added touch-pan-y for better scroll handling
                     style={{ backgroundImage: `url(${stackImages[activeIndex]})` }}
                     onClick={(e) => e.stopPropagation()}
                 >

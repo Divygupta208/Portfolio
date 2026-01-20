@@ -32,6 +32,13 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   showInitialAnimation = false,
 }) => {
   const isUp = direction === "up";
+  const [isClicked, setIsClicked] = React.useState(false);
+
+  const handleClick = (e: any) => {
+    setIsClicked(!isClicked);
+    onClick?.(e);
+  };
+
 
   // Bouncy spring transition for TEXT and ICONS
   const springTransition = {
@@ -149,8 +156,11 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   return (
     <motion.button
       initial="initial"
+      animate={isClicked ? "hover" : "initial"}
       whileHover="hover"
-      onClick={onClick}
+      whileTap="hover"
+      whileFocus="hover"
+      onClick={handleClick}
       className={cn(
         "group relative box-border overflow-hidden px-8 py-3 rounded-full font-bold flex items-center justify-center gap-3 border border-transparent",
         mainBgColor,

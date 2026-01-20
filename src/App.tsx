@@ -7,7 +7,8 @@ import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import Works from "./pages/Works";
 import About from "./pages/About";
-import { Contact } from "lucide-react";
+import Contact from "./pages/Contact";
+
 
 // 1. Define the Router Configuration
 const router = createBrowserRouter([
@@ -42,5 +43,8 @@ const router = createBrowserRouter([
 
 // 2. The Main App Component
 export default function App() {
+
+
+
   return <RouterProvider router={router} />;
 }

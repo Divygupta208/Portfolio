@@ -3,16 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import RollingButton from "../ui/RollButton";
 import Hamburger from "../ui/Hamburger";
 import { useWaveTransition } from "../../hooks/useViewTransition";
-// Ensure this path is correct
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { startWave } = useWaveTransition();
 
   const navLinks = [
+    { name: "Home", href: "/" },
     { name: "Works", href: "/works" },
     { name: "About me", href: "/about" },
-    { name: "Insight", href: "/insight" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -24,7 +23,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-10 max-w-6xl mx-auto"
+      className="fixed top-6 left-0 right-0 z-50 flex justify-center max-w-6xl mx-auto px-4 md:px-6 lg:px-0"
       style={{ viewTransitionName: "site-header" } as React.CSSProperties}
     >
       <nav className="relative w-full bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 h-20 rounded-full flex items-center justify-between px-4 transition-all duration-500">

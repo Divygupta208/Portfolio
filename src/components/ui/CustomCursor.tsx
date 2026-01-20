@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useSpring,
+  useMotionValue,
+  AnimatePresence,
+} from "framer-motion";
 import { Pointer } from "lucide-react";
 
 const CustomCursor = () => {
@@ -48,7 +53,10 @@ const CustomCursor = () => {
   }, [mouseX, mouseY]);
 
   return (
-    <div className={`fixed top-0 left-0 pointer-events-none z-[100000] ${cursorText ? "" : "mix-blend-difference"}`}>
+    <div
+      className={`hidden md:block fixed top-0 left-0 pointer-events-none z-[100000] ${cursorText ? "" : "mix-blend-difference"
+        }`}
+    >
       {/* MAIN WRAPPER: This stays centered on the mouse.
           We use -50% translation so the anchor point is the dead center of the cursor.
       */}
@@ -57,7 +65,7 @@ const CustomCursor = () => {
           x: cursorX,
           y: cursorY,
           translateX: "-50%",
-          translateY: "-50%"
+          translateY: "-50%",
         }}
         className="relative flex items-center justify-center w-0 h-0"
       >
@@ -80,10 +88,15 @@ const CustomCursor = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className={`absolute flex items-center justify-center ${cursorText ? "w-24 h-24 bg-white/60 text-black rounded-full" : ""}`}
+              className={`absolute flex items-center justify-center ${cursorText
+                  ? "w-24 h-24 bg-white/60 text-black rounded-full"
+                  : ""
+                }`}
             >
               {cursorText ? (
-                <span className="text-[13px] font-bold uppercase tracking-widest">{cursorText}</span>
+                <span className="text-[13px] font-bold uppercase tracking-widest">
+                  {cursorText}
+                </span>
               ) : (
                 <motion.div className="absolute text-[13px] font-bold text-white uppercase tracking-widest">
                   <Pointer size={40} />
