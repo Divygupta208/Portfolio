@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { GraduationCap, Briefcase, Code } from "lucide-react";
+import TextAnimation from "../ui/TextAnimation";
 
 // Journey Data
 const journeyData = [
@@ -52,36 +53,64 @@ const MyJourney: React.FC = () => {
     });
 
     return (
-        <section ref={containerRef} className="relative bg-white text-black py-20 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 relative">
+        <section ref={containerRef} className="relative text-black overflow-hidden">
 
-                {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-32 text-center"
-                >
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-4 text-black">
-                        My Journey
-                    </h2>
-                    <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-                        Paving the path through education and experience.
-                    </p>
-                </motion.div>
+            <div className="flex justify-center gap-2 md:gap-4 mb-5">
+                <TextAnimation
+                    variant="wordUp"
+                    duration={0.6}
+                    delay={0.4}
+                    text="My"
+                    className="text-4xl md:text-6xl lg:text-7xl font-medium  text-zinc-950 tracking-tighter"
+                />
+                <TextAnimation
+                    variant="wordUp"
+                    duration={0.6}
+                    delay={0.7}
+                    text="Journey"
+                    className="text-4xl md:text-6xl lg:text-7xl font-medium  text-zinc-950 tracking-tighter "
+                />
+            </div>
+            <div className="flex justify-center px-4 text-center">
+                <TextAnimation
+                    variant="allUp"
+                    duration={0.6}
+                    delay={0.9}
+                    text="Paving the path through education and experience."
+                    className="text-lg md:text-xl lg:text-2xl mb-10 font-medium  text-zinc-950 tracking-tighter"
+                />
+            </div>
+
+
+            <div className="max-w-7xl mx-auto px-6 relative bg-white rounded-4xl p-10">
+
+
 
                 <div className="relative">
 
                     {/* ROAD SVG - Weaving Background */}
-                    <div className="hidden md:block absolute left-0 right-0 top-[-50px] bottom-0 mx-auto w-full max-w-4xl opacity-50 h-[105%]">
+                    <div className="absolute left-0 right-0 top-[-40px] bottom-0 mx-auto w-full max-w-4xl opacity-100 h-[105%]">
                         <svg width="100%" height="100%" viewBox="0 0 800 1600" preserveAspectRatio="none" className="w-full h-full">
                             <defs>
                                 <linearGradient id="roadGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stopColor="#e5e5e5" stopOpacity="0" />
-                                    <stop offset="10%" stopColor="#e5e5e5" stopOpacity="1" />
-                                    <stop offset="90%" stopColor="#e5e5e5" stopOpacity="1" />
-                                    <stop offset="100%" stopColor="#e5e5e5" stopOpacity="0" />
+                                    <stop offset="0%" stopColor="#000000ff" stopOpacity="0" />
+                                    <stop offset="10%" stopColor="#000000ff" stopOpacity="1" />
+                                    <stop offset="90%" stopColor="#000000ff" stopOpacity="1" />
+                                    <stop offset="100%" stopColor="#000000ff" stopOpacity="0" />
                                 </linearGradient>
+                                <mask id="dashed-line-mask">
+                                    <motion.path
+                                        d="M 400 0 
+                                   C 400 100, 200 100, 200 300 
+                                   C 200 500, 600 500, 600 700 
+                                   C 600 900, 200 900, 200 1100 
+                                   C 200 1300, 400 1300, 400 1600"
+                                        stroke="white"
+                                        strokeWidth="6"
+                                        fill="none"
+                                        style={{ pathLength }}
+                                    />
+                                </mask>
                             </defs>
 
                             {/* Weaving Path - Fits behind alternating cards */}
@@ -99,43 +128,26 @@ const MyJourney: React.FC = () => {
                                 fill="none"
                             />
 
-                            {/* Dashed Center Line - Static */}
+
+
+                            {/* Dashed Center Line - Animated */}
+                            {/* Dashed Center Line - Masked Reveal */}
                             <path
                                 d="M 400 0 
                                    C 400 100, 200 100, 200 300 
                                    C 200 500, 600 500, 600 700 
                                    C 600 900, 200 900, 200 1100 
                                    C 200 1300, 400 1300, 400 1600"
-                                stroke="#a3a3a3"
+                                stroke="#ffffffff"
                                 strokeWidth="4"
                                 fill="none"
                                 strokeDasharray="20 20"
-                                className="opacity-40"
-                            />
-
-                            {/* Dashed Center Line - Animated */}
-                            <motion.path
-                                d="M 400 0 
-                                   C 400 100, 200 100, 200 300 
-                                   C 200 500, 600 500, 600 700 
-                                   C 600 900, 200 900, 200 1100 
-                                   C 200 1300, 400 1300, 400 1600"
-                                stroke="#000"
-                                strokeWidth="4"
-                                fill="none"
-                                strokeDasharray="20 20"
-                                style={{ pathLength }}
+                                mask="url(#dashed-line-mask)"
                             />
                         </svg>
                     </div>
 
-                    {/* MOBILE ROAD (Simple line) */}
-                    <div className="md:hidden absolute left-8 top-0 bottom-0 w-1 bg-neutral-100">
-                        <motion.div
-                            className="w-full bg-black origin-top"
-                            style={{ scaleY: scrollYProgress, height: "100%" }}
-                        />
-                    </div>
+
 
                     {/* CONTENT ITEMS */}
                     <div className="space-y-32 relative z-10">
@@ -153,7 +165,7 @@ const MyJourney: React.FC = () => {
                                         className={`w-full md:w-1/2 px-12 md:px-16 ${isEven ? 'md:text-right' : 'md:text-left'}`}
                                     >
                                         <div className={`relative group inline-block w-full`}>
-                                            <div className="bg-white border border-neutral-200 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
+                                            <div className="bg-white shadow-lg p-8 rounded-2xl transition-all duration-300">
                                                 <div className={`flex items-center gap-4 mb-6 ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
                                                     <div className="p-3 bg-neutral-100 text-black rounded-lg">
                                                         <item.icon size={24} />
@@ -178,8 +190,7 @@ const MyJourney: React.FC = () => {
                                     {/* Empty Side for layout balance (or styling element) */}
                                     <div className="hidden md:block w-1/2" />
 
-                                    {/* Mobile Dot */}
-                                    <div className="md:hidden absolute left-[26px] mt-[-300px] w-4 h-4 bg-white border-4 border-black rounded-full z-20" />
+
                                 </div>
                             );
                         })}

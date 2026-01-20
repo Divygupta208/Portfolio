@@ -5,9 +5,11 @@ import MySkills from "../components/about/MySkills";
 const About = () => {
   return (
     <>
-      <AboutHero />
-      <MySkills />
-      <MyJourney />
+      <div className="space-y-10 md:space-y-20">
+        <AboutHero />
+        <MyJourney />
+        <MySkills />
+      </div>
     </>
   );
 };
