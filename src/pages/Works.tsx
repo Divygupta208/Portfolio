@@ -1,7 +1,9 @@
-import React from "react";
+import WorkHero from "../components/works/WorksHero";
 
 const Works = () => {
-  return <div></div>;
+  return <>
+    <WorkHero />
+  </>;
 };
 
 export default Works;

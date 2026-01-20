@@ -121,7 +121,7 @@ const SelectedWorks = () => {
                             style={{ y: containerY }}
                             className="relative w-full h-[80vh] overflow-hidden rounded-[40px] bg-zinc-100 border border-zinc-200/50 shadow-2xl will-change-transform"
                         >
-                            <AnimatePresence mode="wait">
+                            <AnimatePresence mode="popLayout">
                                 <motion.div
                                     key={activeIndex}
                                     initial={{ opacity: 0 }}

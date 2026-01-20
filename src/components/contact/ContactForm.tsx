@@ -1,4 +1,4 @@
-import React from "react";
+
 import { motion } from "framer-motion";
 import TextAnimation from "../ui/TextAnimation";
 
@@ -10,6 +10,9 @@ const ContactForm = () => {
                 {/* LEFT SIDE: Heading & Info */}
                 <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-16 flex flex-col justify-between">
                     <div>
+                        <span className="text-xl md:text-2xl font-medium text-black block mb-4">
+                            Contact
+                        </span>
                         <div className="mb-6">
                             <TextAnimation
                                 text="I'm ready to"
@@ -36,8 +39,7 @@ const ContactForm = () => {
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6, duration: 0.8 }}
                             className="text-xl md:text-2xl text-zinc-800 dark:text-zinc-400 max-w-lg tracking-wide mt-12"
                         >
@@ -51,8 +53,7 @@ const ContactForm = () => {
                 {/* RIGHT SIDE: Form */}
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 0.8 }}
                     className="bg-[#ffffff] dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-14 flex flex-col"
                 >

@@ -32,10 +32,35 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   showInitialAnimation = false,
 }) => {
   const isUp = direction === "up";
-  const [isClicked, setIsClicked] = React.useState(false);
+  const [isHovered, setIsHovered] = React.useState(false);
+  const [isRolling, setIsRolling] = React.useState(false);
+  const isTouch = React.useRef(false);
+
+  const handleTouchStart = () => {
+    isTouch.current = true;
+  };
+
+  const handleMouseEnter = () => {
+    if (!isTouch.current) {
+      setIsHovered(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isTouch.current) {
+      setIsHovered(false);
+    }
+  };
 
   const handleClick = (e: any) => {
-    setIsClicked(!isClicked);
+    // If it's a touch interaction (or we simply want to enforce temporary roll),
+    // and we aren't legitimately hovered (mouse), trigger the roll.
+    if (!isHovered || isTouch.current) {
+      // Force unhover if somehow set, and trigger roll
+      setIsHovered(false);
+      setIsRolling(true);
+      setTimeout(() => setIsRolling(false), 500);
+    }
     onClick?.(e);
   };
 
@@ -156,10 +181,10 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   return (
     <motion.button
       initial="initial"
-      animate={isClicked ? "hover" : "initial"}
-      whileHover="hover"
-      whileTap="hover"
-      whileFocus="hover"
+      animate={isHovered || isRolling ? "hover" : "initial"}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
       onClick={handleClick}
       className={cn(
         "group relative box-border overflow-hidden px-8 py-3 rounded-full font-bold flex items-center justify-center gap-3 border border-transparent",

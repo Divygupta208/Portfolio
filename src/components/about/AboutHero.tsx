@@ -23,20 +23,22 @@ const AboutHero = () => {
         <div className="bg-white rounded-4xl p-8 md:p-12 flex flex-col justify-between h-full">
           <div>
             <span className="text-xl md:text-2xl font-medium text-black block mb-4">
-              About me
+              About
             </span>
             <div className="flex flex-col gap-1">
               <TextAnimation
                 text="I'm versatile"
                 variant="wordUp"
                 delay={0.2}
-                className="text-3xl md:text-6xl lg:text-8xl font-medium text-black tracking-tighter leading-[0.9]"
+                trigger={true}
+                className="text-5xl md:text-6xl lg:text-8xl font-medium text-black tracking-tighter leading-[0.9]"
               />
               <TextAnimation
                 text="designer"
                 variant="wordUp"
                 delay={0.4}
-                className="text-3xl md:text-6xl lg:text-8xl font-medium text-secondary tracking-tighter leading-[0.9]"
+                trigger={true}
+                className="text-6xl lg:text-8xl font-medium text-secondary tracking-tighter leading-[0.9]"
               />
             </div>
           </div>

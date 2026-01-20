@@ -88,14 +88,14 @@ const Hero = () => {
             variant="allUp"
             delay={0.9}
             trigger={true}
-            className="mb-2 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
+            className="mb-2 md:mb-6 text-5xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
           />
           <TextAnimation
             text="with lasting impact"
             variant="allUp"
             delay={1}
             trigger={true}
-            className="mb-4 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
+            className="mb-4 md:mb-6 text-5xl md:text-8xl tracking-tighter font-medium text-secondary leading-tight"
           />
         </div>
 
@@ -105,7 +105,7 @@ const Hero = () => {
             variant="allUp"
             delay={1.2}
             trigger={true}
-            className="mb-8 md:mb-10 text-base md:text-xl font-light text-black leading-relaxed"
+            className="mb-8 md:mb-10 text-lg md:text-xl font-light text-black leading-relaxed"
           />
         </div>
 

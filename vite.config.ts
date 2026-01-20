@@ -7,4 +7,7 @@ export default defineConfig({
     react(),
     tailwindcss(), // Add this to the plugins array
   ],
+  server: {
+    port: 3002, // Replace with your desired port
+  },
 });
