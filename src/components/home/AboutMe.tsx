@@ -36,7 +36,7 @@ const AboutSection = () => {
           duration={0.6}
           delay={0.9}
           text="a developer based in India."
-          className="text-lg md:text-xl lg:text-2xl font-medium  text-zinc-950 tracking-tighter"
+          className="text-lg md:text-xl lg:text-2xl font-medium -mb-5 md:mb-5  text-zinc-950 tracking-tighter"
         />
       </div>
 
