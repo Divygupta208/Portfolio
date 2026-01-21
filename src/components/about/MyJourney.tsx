@@ -43,12 +43,12 @@ const MyJourney: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start end", "end start"],
+        offset: ["start 80%", "end 40%"],
     });
 
     const pathLength = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
+        stiffness: 200,
+        damping: 20,
         restDelta: 0.001
     });
 
@@ -82,7 +82,7 @@ const MyJourney: React.FC = () => {
             </div>
 
 
-            <div className="max-w-7xl mx-auto px-6 relative bg-white rounded-4xl p-10">
+            <div className="max-w-7xl mx-auto px-6 relative rounded-4xl p-10">
 
 
 
@@ -126,6 +126,8 @@ const MyJourney: React.FC = () => {
                                 stroke="url(#roadGradient)"
                                 strokeWidth="80"
                                 fill="none"
+                                strokeLinecap="round"
+                                style={{ pathLength }}
                             />
 
 
@@ -141,6 +143,7 @@ const MyJourney: React.FC = () => {
                                 stroke="#ffffffff"
                                 strokeWidth="4"
                                 fill="none"
+                                strokeLinecap="round"
                                 strokeDasharray="20 20"
                                 mask="url(#dashed-line-mask)"
                             />

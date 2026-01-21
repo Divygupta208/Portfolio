@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import RollingButton from "../ui/RollButton";
 import TextAnimation from "../ui/TextAnimation";
+import { SiGithub, SiInstagram, SiLeetcode, SiLinkedin } from "react-icons/si";
 
 const Hero = () => {
   const containerVariants = {
@@ -37,23 +38,27 @@ const Hero = () => {
   const socialLinks = [
     {
       name: "LinkedIn",
-      icon: <Linkedin size={18} />,
+      icon: <SiLinkedin size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://www.linkedin.com/in/divygupta208/"
     },
     {
-      name: "Dribbble",
-      icon: <Dribbble size={18} />,
+      name: "LeetCode",
+      icon: <SiLeetcode size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://leetcode.com/u/divygupta208/"
     },
     {
-      name: "Twitter",
-      icon: <Twitter size={18} />,
+      name: "GitHub",
+      icon: <SiGithub size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://github.com/Divygupta208"
     },
     {
       name: "Instagram",
-      icon: <Instagram size={18} />,
+      icon: <SiInstagram size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://www.instagram.com/divy__._/"
     },
   ];
 
@@ -130,7 +135,7 @@ const Hero = () => {
             subBgColor="bg-white"
             mainTextColor="text-white"
             subTextColor="text-black"
-            direction="down"
+            direction="up"
             className="w-full sm:w-auto justify-center"
           />
         </motion.div>
@@ -146,6 +151,7 @@ const Hero = () => {
               mainIcon={link.icon}
               subIcon={link.subIcon}
               direction="up"
+              onClick={() => window.open(link.link, "_blank")}
               mainBgColor="bg-[white]"
               subBgColor="bg-[white]"
               mainTextColor="text-black"

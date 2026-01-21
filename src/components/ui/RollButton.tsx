@@ -53,15 +53,25 @@ const RollingButton: React.FC<RollingButtonProps> = ({
   };
 
   const handleClick = (e: any) => {
-    // If it's a touch interaction (or we simply want to enforce temporary roll),
-    // and we aren't legitimately hovered (mouse), trigger the roll.
-    if (!isHovered || isTouch.current) {
-      // Force unhover if somehow set, and trigger roll
+    // If it's a touch interaction, we want to play the animation FIRST, then click.
+    if (isTouch.current) {
       setIsHovered(false);
       setIsRolling(true);
-      setTimeout(() => setIsRolling(false), 500);
+
+      // Delay the actual click action to let the animation play
+      setTimeout(() => {
+        setIsRolling(false);
+        onClick?.(e);
+      }, 450);
+    } else {
+      // Desktop/Mouse: If not hovered (rare), trigger roll, but click immediately
+      if (!isHovered) {
+        setIsHovered(false);
+        setIsRolling(true);
+        setTimeout(() => setIsRolling(false), 500);
+      }
+      onClick?.(e);
     }
-    onClick?.(e);
   };
 
 
@@ -133,51 +143,6 @@ const RollingButton: React.FC<RollingButtonProps> = ({
     },
   };
 
-  // Wrapper for main text and icon with initial animation
-  const MainTextContent = () => {
-    if (showInitialAnimation && typeof mainText === "string") {
-      // Animate words individually
-      const words = mainText.split(" ");
-      return (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="flex flex-wrap gap-x-[0.25em]"
-          transition={{ staggerChildren: 0.04 }}
-        >
-          {words.map((word, i) => (
-            <span key={i} className="inline-block overflow-hidden">
-              <motion.span
-                variants={initialTextVariants}
-                className="inline-block"
-              >
-                {word}
-              </motion.span>
-            </span>
-          ))}
-        </motion.div>
-      );
-    }
-    return <>{mainText}</>;
-  };
-
-  const MainIconContent = () => {
-    if (showInitialAnimation && mainIcon) {
-      return (
-        <motion.span
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={initialIconVariants}
-        >
-          {mainIcon}
-        </motion.span>
-      );
-    }
-    return <>{mainIcon}</>;
-  };
-
   return (
     <motion.button
       initial="initial"
@@ -215,7 +180,18 @@ const RollingButton: React.FC<RollingButtonProps> = ({
                 transition={springTransition}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <MainIconContent />
+                {showInitialAnimation ? (
+                  <motion.span
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={initialIconVariants}
+                  >
+                    {mainIcon}
+                  </motion.span>
+                ) : (
+                  mainIcon
+                )}
               </motion.span>
             )}
             {subIcon && (
@@ -238,7 +214,25 @@ const RollingButton: React.FC<RollingButtonProps> = ({
             transition={springTransition}
             className="col-start-1 row-start-1 whitespace-nowrap"
           >
-            <MainTextContent />
+            {showInitialAnimation && typeof mainText === "string" ? (
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex flex-wrap gap-x-[0.25em]"
+                transition={{ staggerChildren: 0.04 }}
+              >
+                {mainText.split(" ").map((word, i) => (
+                  <span key={i} className="inline-block overflow-hidden">
+                    <motion.span variants={initialTextVariants} className="inline-block">
+                      {word}
+                    </motion.span>
+                  </span>
+                ))}
+              </motion.div>
+            ) : (
+              mainText
+            )}
           </motion.div>
 
           {/* Sub Text */}

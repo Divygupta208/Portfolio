@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Dot, Mail } from "lucide-react";
 import RollingButton from "../ui/RollButton";
 import Hamburger from "../ui/Hamburger";
 import { useWaveTransition } from "../../hooks/useViewTransition";
@@ -94,9 +94,10 @@ const Header: React.FC = () => {
           className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 cursor-pointer ml-5"
           onClick={(e) => handleNavClick(e as any, "/")}
         >
-          <span className="font-bold text-slate-900 dark:text-white uppercase flex items-center gap-1">
-            Divy.
-            <span className="relative w-[5.5em] h-[1.2em] overflow-hidden inline-flex items-center perspective-[400px]">
+          <span className="font-bold text-slate-900 dark:text-white uppercase flex items-center gap-0 md:gap-1">
+            <img src="public/BLACK_LOGO.png" alt="" className="w-8 h-8 md:h-10" />
+            <Dot />
+            <span className="relative w-[5.5em] h-[1.2em] md:h-[1.6em] overflow-hidden inline-flex items-center perspective-[400px]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={rotatingWords[currentWordIndex]}

@@ -9,8 +9,8 @@ const HomePage = () => {
   return (
     <div className="space-y-10 md:space-y-20">
       <Hero />
-      <SelectedWorks />
       <AboutSection />
+      <SelectedWorks />
       <MySkills />
       <ServiceCards />
     </div>

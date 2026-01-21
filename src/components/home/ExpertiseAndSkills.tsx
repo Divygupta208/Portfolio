@@ -57,14 +57,14 @@ const ServiceCards = () => {
         <TextAnimation
           variant="wordUp"
           duration={0.6}
-          delay={0.4}
+          delay={0.2}
           text="My"
           className="text-4xl md:text-6xl lg:text-7xl font-medium  text-zinc-950 tracking-tighter"
         />
         <TextAnimation
           variant="wordUp"
           duration={0.6}
-          delay={0.7}
+          delay={0.3}
           text="Expertise"
           className="text-4xl md:text-6xl lg:text-7xl font-medium  text-zinc-950 tracking-tighter "
         />

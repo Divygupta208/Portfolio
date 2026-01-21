@@ -29,14 +29,14 @@ const AboutHero = () => {
               <TextAnimation
                 text="I'm versatile"
                 variant="wordUp"
-                delay={0.2}
+                delay={0.4}
                 trigger={true}
                 className="text-5xl md:text-6xl lg:text-8xl font-medium text-black tracking-tighter leading-[0.9]"
               />
               <TextAnimation
                 text="designer"
                 variant="wordUp"
-                delay={0.4}
+                delay={0.6}
                 trigger={true}
                 className="text-6xl lg:text-8xl font-medium text-secondary tracking-tighter leading-[0.9]"
               />
