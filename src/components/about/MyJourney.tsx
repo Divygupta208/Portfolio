@@ -7,36 +7,37 @@ import TextAnimation from "../ui/TextAnimation";
 const journeyData = [
     {
         type: "education",
-        year: "2020 - 2024",
-        title: "Bachelor of Technology",
-        institution: "Computer Science & Engineering",
+        year: "2019 - 2023",
+        title: "Bachelor of Technology-ME",
+        institution: "National Institute of Technology, Raipur (NIT Raipur)",
         description: "Focused on Algorithms, Data Structures, and Web Technologies. Built strong foundation in software engineering principles.",
         icon: GraduationCap,
     },
     {
         type: "experience",
-        year: "2023 - Present",
-        title: "Freelance Full Stack Developer",
-        institution: "Self-Employed",
-        description: "Delivering custom web solutions for diverse clients. Specializing in React, Node.js, and 3D web experiences.",
+        year: "2023 - 2024",
+        title: "Full Stack Developer Training",
+        institution: "Sharpener Tech",
+        description: "Learned Full Stack Development with React, Node.js, and 3D web experiences.",
         icon: Code,
     },
     {
         type: "experience",
-        year: "2022 - 2023",
-        title: "Frontend Developer Intern",
-        institution: "Tech Startup",
-        description: "Collaborated on building responsive UI components and optimizing frontend performance using React and Tailwind CSS.",
+        year: "2025 - 2025",
+        title: "Associate Software Developer Intern",
+        institution: "360Customizer",
+        description: "Implemented Frontend Development with React, Node.js, and 3D web experiences.",
         icon: Briefcase,
     },
     {
-        type: "education",
-        year: "2018 - 2020",
-        title: "Higher Secondary Education",
-        institution: "Science Stream",
-        description: "Completed foundation in Physics, Chemistry, and Mathematics.",
-        icon: GraduationCap,
+        type: "experience",
+        year: "2025 - 2026",
+        title: "Associate Software Engineer",
+        institution: "360Customizer",
+        description: "Implemented complete software architecture for frontend fron scartch built multiple application using frontend web technologies.",
+        icon: Briefcase,
     },
+
 ];
 
 const MyJourney: React.FC = () => {
@@ -126,7 +127,7 @@ const MyJourney: React.FC = () => {
                                 stroke="url(#roadGradient)"
                                 strokeWidth="80"
                                 fill="none"
-                                strokeLinecap="round"
+
                                 style={{ pathLength }}
                             />
 
@@ -143,7 +144,7 @@ const MyJourney: React.FC = () => {
                                 stroke="#ffffffff"
                                 strokeWidth="4"
                                 fill="none"
-                                strokeLinecap="round"
+
                                 strokeDasharray="20 20"
                                 mask="url(#dashed-line-mask)"
                             />

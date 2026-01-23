@@ -12,27 +12,30 @@ import TextAnimation from "../ui/TextAnimation";
 const sections = [
     {
         id: 1,
-        title: "Interface Agents",
+        title: "go-Mail",
         description:
-            "Broad agentic control across your editor, terminal, and browser for powerful development workflows.",
-        image:
-            "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop",
+            "Mailbox Management: Compose, send, receive, and organize emails efficiently. REST API & Firebase Backend: Real-time data synchronization and secure storage.",
+        image: "/projects/go-mail.png",
+        tags: ["React", "JS", "Firebase", "Framer"],
+        link: "https://go-mail.netlify.app/",
     },
     {
         id: 2,
-        title: "First Experience",
+        title: "Daily-Cents",
         description:
-            "Multiple agents at the same time, across any project, from one central mission control view.",
-        image:
-            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop",
+            "Expense Management: Add, edit, and delete expenses. Categorize and visualize spending with Pie/Bar charts using Recharts. Premium subscription model.",
+        image: "/projects/daily-cents.png",
+        tags: ["AWS", "React", "Node", "JS", "SQL"],
+        link: "https://daily-cents.vercel.app/",
     },
     {
         id: 3,
-        title: "Built for Developers",
+        title: "YAPP -Chat",
         description:
-            "Antigravity is built for user trust, whether you are a professional developer or a hobbyist.",
-        image:
-            "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop",
+            "Real-Time Messaging: Bidirectional communication using WebSockets. Supports one-on-one and group chats with seamless media sharing.",
+        image: "/projects/yapp-chat.png",
+        tags: ["AWS", "React", "Node", "JS", "Sockets"],
+        link: "",
     },
 ];
 
@@ -226,19 +229,51 @@ const ContentSection = ({
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-gray-100 dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-5 md:rounded-4xl md:h-[70vh]"
+                className="bg-gray-100 dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-5 md:rounded-4xl h-auto"
             >
                 <span className="text-zinc-500 md:text-zinc-400 font-mono text-sm mb-4 block uppercase tracking-widest">
                     0{index + 1}
                 </span>
-                <h2 className="text-4xl md:text-6xl font-bold text-secondary mb-6 md:mb-8 dark:text-zinc-100 tracking-tighter">
+                <h2 className="text-4xl md:text-6xl font-bold text-secondary mb-6 md:mb-6 dark:text-zinc-100 tracking-tighter">
                     {section.title}
                 </h2>
-                <p className="text-lg md:text-xl text-zinc-600 md:text-zinc-500 max-w-md leading-relaxed">
+                <div className="flex flex-wrap gap-2 mb-6">
+                    {section.tags.map((tag: string, i: number) => (
+                        <span
+                            key={i}
+                            className="px-3 py-1 rounded-full border border-zinc-300 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-400 font-medium"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+                <p className="text-lg md:text-xl text-zinc-600 md:text-zinc-500 max-w-md leading-relaxed mb-8">
                     {section.description}
                 </p>
 
-                {/* Mobile 'View Case' Link/Button Spacer could go here if needed */}
+                {section.link && (
+                    <a
+                        href={section.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-zinc-900 dark:text-white font-medium hover:underline text-lg group"
+                    >
+                        View Project
+                        <svg
+                            className="w-5 h-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                            />
+                        </svg>
+                    </a>
+                )}
             </motion.div>
         </section>
     );
