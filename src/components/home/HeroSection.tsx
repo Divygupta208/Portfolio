@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import RollingButton from "../ui/RollButton";
 import TextAnimation from "../ui/TextAnimation";
+import { SiGithub, SiInstagram, SiLeetcode, SiLinkedin } from "react-icons/si";
 
 const Hero = () => {
   const containerVariants = {
@@ -37,46 +38,52 @@ const Hero = () => {
   const socialLinks = [
     {
       name: "LinkedIn",
-      icon: <Linkedin size={18} />,
+      icon: <SiLinkedin size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://www.linkedin.com/in/divygupta208/"
     },
     {
-      name: "Dribbble",
-      icon: <Dribbble size={18} />,
+      name: "LeetCode",
+      icon: <SiLeetcode size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://leetcode.com/u/divygupta208/"
     },
     {
-      name: "Twitter",
-      icon: <Twitter size={18} />,
+      name: "GitHub",
+      icon: <SiGithub size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://github.com/Divygupta208"
     },
     {
       name: "Instagram",
-      icon: <Instagram size={18} />,
+      icon: <SiInstagram size={18} />,
       subIcon: <ArrowRight size={18} />,
+      link: "https://www.instagram.com/divy__._/"
     },
   ];
 
   return (
-    <section className="min-h-screen w-full bg-[#E5E7EB] flex flex-col gap-4 p-4 md:p-6 lg:p-0">
+    <section className="min-h-screen w-full bg-[#E5E7EB] flex flex-col gap-4 px-4 md:px-6 lg:p-0">
       {/* Main Hero Card */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grow w-full max-w-6xl mx-auto bg-white rounded-3xl flex flex-col items-center justify-center text-center p-8 md:p-12"
+        className="grow w-full max-w-6xl mx-auto bg-white rounded-4xl flex flex-col items-center justify-center text-center p-8 md:p-12"
       >
         <div className="flex gap-2 flex-wrap justify-center">
           <TextAnimation
             text="Hello, I'm"
             variant="wordUp"
             delay={0.5}
+            trigger={true}
             className="mb-2 md:mb-4 text-xl md:text-3xl lg:text-3xl text-black"
           />
           <TextAnimation
             text="Divy"
             variant="wordUp"
             delay={0.6}
+            trigger={true}
             className="mb-2 md:mb-4 text-xl md:text-3xl lg:text-3xl text-black"
           />
         </div>
@@ -85,13 +92,15 @@ const Hero = () => {
             text="I'm bringing ideas to life"
             variant="allUp"
             delay={0.9}
-            className="mb-2 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
+            trigger={true}
+            className="mb-2 md:mb-6 text-5xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
           />
           <TextAnimation
             text="with lasting impact"
             variant="allUp"
             delay={1}
-            className="mb-4 md:mb-6 text-4xl md:text-8xl tracking-tighter font-medium text-black leading-tight"
+            trigger={true}
+            className="mb-4 md:mb-6 text-5xl md:text-8xl tracking-tighter font-medium text-secondary leading-tight"
           />
         </div>
 
@@ -100,11 +109,15 @@ const Hero = () => {
             text="I create digital products that focus on the user's needs and fit the product strategy"
             variant="allUp"
             delay={1.2}
-            className="mb-8 md:mb-10 text-base md:text-xl font-light text-black leading-relaxed"
+            trigger={true}
+            className="mb-8 md:mb-10 text-lg md:text-xl font-light text-black leading-relaxed"
           />
         </div>
 
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 md:gap-5 w-full sm:w-auto px-4 sm:px-0">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-4 md:gap-5 w-full sm:w-auto px-4 sm:px-0"
+        >
           <RollingButton
             mainText="CONTACT ME"
             subText="LET'S TALK"
@@ -122,26 +135,23 @@ const Hero = () => {
             subBgColor="bg-white"
             mainTextColor="text-white"
             subTextColor="text-black"
-            direction="down"
+            direction="up"
             className="w-full sm:w-auto justify-center"
           />
         </motion.div>
-
       </motion.div>
 
       {/* Bottom Social Links Row */}
       <div className="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center mx-auto pb-4 lg:pb-0 px-4 lg:px-0">
         {socialLinks.map((link, index) => (
-          <motion.div
-            key={link.name}
-            className="w-full"
-          >
+          <motion.div key={link.name} className="w-full">
             <RollingButton
               mainText={link.name}
               subText="Visit Link"
               mainIcon={link.icon}
               subIcon={link.subIcon}
               direction="up"
+              onClick={() => window.open(link.link, "_blank")}
               mainBgColor="bg-[white]"
               subBgColor="bg-[white]"
               mainTextColor="text-black"

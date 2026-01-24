@@ -17,7 +17,7 @@ const Counter: React.FC<CounterProps> = ({ value, className }) => {
     const [displayValue, setDisplayValue] = useState(0);
 
     // Trigger animation only once when in view
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const isInView = useInView(ref, { once: true, margin: "-10px" });
 
     useEffect(() => {
         if (isInView) {

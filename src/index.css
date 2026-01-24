@@ -1,127 +1,257 @@
 @import "tailwindcss";
 
 
-html, body {
+
+
+
+html,
+body {
+
   cursor: none !important;
+
 }
 
+
+
 /* Ensure buttons and links also don't show the default pointer */
-a, button, [role="button"] {
+
+a,
+button,
+[role="button"] {
+
   cursor: none !important;
+
 }
+
+
+
 
 
 .custom-cursor-layer {
+
   pointer-events: none;
-  mix-blend-mode: difference; /* Key property for color inversion */
+
+  mix-blend-mode: difference;
+  /* Key property for color inversion */
+
   z-index: 99999;
+
   position: fixed;
+
   top: 0;
+
   left: 0;
+
 }
+
+
 
 .fixed {
+
   transition-property: none !important;
+
 }
 
+
+
 @theme {
+
   --color-primary: var(--primary);
+
   --color-main-bg: var(--bg);
+
   --color-main-text: var(--text);
+
   --color-border: var(--border);
+
   --color-secondary: var(--secondary);
+
   /* Use the Manrope font configured globally */
+
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
 }
+
+
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+
 @layer base {
+
   :root {
+
     --primary: #c6d9ff;
+
     --bg: #e5e7eb;
+
     --text: #0f172a;
+
     --secondary: #64748b;
+
     --border: #e2e8f0;
+
   }
+
+
 
   .dark {
+
     --primary: #60a5fa;
+
     --bg: #020617;
+
     --text: #f8fafc;
+
     --secondary: #94a3b8;
+
     --border: #1e293b;
+
   }
+
+
 
   html {
+
     font-family: var(--font-sans);
+
     -webkit-font-smoothing: antialiased;
+
     -moz-osx-font-smoothing: grayscale;
+
     /* Prevent scrollbar jump during transitions */
+
     overflow-y: scroll;
+
   }
+
+
 
   body {
+
     @apply bg-main-bg text-main-text;
+
     margin: 0;
+
     /* Standard transitions are disabled to prevent conflict with View Transition */
+
     transition: none;
+
   }
 
-  /* IMPORTANT: Disable all global transitions while the wave is running 
+
+
+  /* IMPORTANT: Disable all global transitions while the wave is running
+
      to prevent elements from jumping or flickering.
+
   */
+
   [data-view-transition="running"] * {
+
     transition: none !important;
+
   }
+
 }
+
+
 
 /* --- VIEW TRANSITION API OVERRIDES --- */
 
+
+
 /* Reset default browser animations (cross-fades) */
+
 ::view-transition-group(root),
+
 ::view-transition-group(site-header) {
+
   animation-duration: 0s;
+
 }
+
+
 
 /* Ensure the header stays on top of everything during transition */
+
 ::view-transition-group(site-header) {
+
   z-index: 10000;
+
 }
+
+
 
 ::view-transition-old(root),
+
 ::view-transition-new(root) {
+
   animation: none;
+
   mix-blend-mode: normal;
+
   display: block;
+
   height: 100%;
+
 }
+
+
 
 /* The 'Old' page stays static in the background */
+
 ::view-transition-old(root) {
+
   z-index: 1;
+
 }
 
+
+
 /* The 'New' page is what we animate with the clip-path wave */
+
 ::view-transition-new(root) {
+
   z-index: 9999;
+
   /* Hardware acceleration for smooth clip-path performance */
+
   will-change: clip-path;
+
   /* Anti-aliasing for the circular edge */
+
   outline: 1px solid transparent;
+
 }
+
+
 
 /* --- UTILITIES --- */
 
+
+
 /* Allow only specific elements to have transitions if needed */
+
 .transition-all {
+
   transition-duration: 300ms !important;
+
   transition-property: all;
+
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 
+
+
 /* Selection color matching your primary theme */
+
 ::selection {
+
   background-color: var(--primary);
+
   color: var(--text);
+
 }
